@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Great_Quotes</title>
+    <style>
+        .container{
+            position: absolute;
+            top: 30%;
+            left: 25%;
+            width: 50%;
+            height: 50%;
+            border: 2px solid darkblue;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            background-color: rgb(222, 246, 231);
+            
+        }
+        #newQuotes{
+            position: absolute;
+            border: none;
+            font-size: 1.2rem;
+            color: darkblue;
+            /* top: 70%;; */
+            bottom: 10%;
+            cursor: pointer;
+            border: 3px solid rgb(82, 82, 253);
+            border-radius: 5%;
+        }
+        #author{
+            position: absolute;
+            font-size: 1.2rem;
+            color: darkblue;
+            bottom: 30%;
+        }
+        #quotes{
+            color: rgb(121, 4, 105);
+            top: 10%;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div id="quotes">
+    </div>
+    <div id="author" style="color: darkcyan; position: absolute; right: 5%;">
+    </div>
+    <button id="newQuotes"> newQuotes</button>
+</div>
+    <script>
+        const quotes = document.getElementById("quotes");
+        const author = document.getElementById("author");
+        const newQuotes = document.getElementById("newQuotes");
+        let realData = "";
+        let authorvalue = "";
+        const getnewQuotes = ()=>{
+            let rnum =Math.floor(Math.random()*1642);
+            console.log(realData[rnum]);
+        quotes.innerText = `${realData[rnum].text}`;
+        authorvalue = realData[rnum].author;
+        if(authorvalue==null)
+        authorvalue="- Unknown" ;
+        author.innerText =`- ${authorvalue}`;
+
+        }
+        const getQuotes = async()=>{
+            const api = "https://type.fit/api/quotes";
+            try{
+                let data = await fetch(api);
+                realData = await data.json();
+                getnewQuotes();
+            }
+            catch(error){
+                console.log(error);
+            }
+        }
+        
+        newQuotes.addEventListener("click",getQuotes);
+        getQuotes();
+    </script>
+</body>
+</html>
